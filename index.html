@@ -48,7 +48,12 @@
       <div><span class="kicker">Le persone</span><h2 id="staff-title">Il team dell'Ufficio Didattica</h2></div>
       <p>Ogni membro contribuisce al funzionamento quotidiano della scuola e al supporto della comunità scolastica.</p>
     </div>
-    <div class="staff-grid">
+    <div class="slider-controls" aria-label="Controlli scorrimento profili">
+      <button class="slider-btn" type="button" id="staff-prev" aria-label="Mostra il profilo precedente">← <span>Precedente</span></button>
+      <span class="slider-hint">Scorri per conoscere tutto lo staff</span>
+      <button class="slider-btn" type="button" id="staff-next" aria-label="Mostra il profilo successivo"><span>Successivo</span> →</button>
+    </div>
+    <div class="staff-slider" id="staff-slider" tabindex="0" aria-label="Profili dello staff, scorrimento orizzontale">
       <article class="staff-card staff-card-featured">
         <img class="staff-photo" src="gianfranco-del-prete.jpg.jpeg" alt="Gianfranco Del Prete, assistente tecnico dell'area informatica" loading="lazy">
         <h3>Gianfranco Del Prete</h3>
@@ -98,5 +103,19 @@
   <span>© Liceo Classico e Scientifico “Francesco Sbordone” · Napoli</span>
   <span>Pagina informativa da verificare e approvare prima della pubblicazione.</span>
 </footer>
+<script>
+(() => {
+  const slider = document.getElementById("staff-slider");
+  const prev = document.getElementById("staff-prev");
+  const next = document.getElementById("staff-next");
+  if (!slider || !prev || !next) return;
+  const step = () => {
+    const card = slider.querySelector(".staff-card");
+    return card ? card.getBoundingClientRect().width + parseFloat(getComputedStyle(slider).gap || 0) : slider.clientWidth;
+  };
+  prev.addEventListener("click", () => slider.scrollBy({left: -step(), behavior: "smooth"}));
+  next.addEventListener("click", () => slider.scrollBy({left: step(), behavior: "smooth"}));
+})();
+</script>
 </body>
 </html>
